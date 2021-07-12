@@ -1,0 +1,19 @@
+.page-header_logo {
+	border-radius: 50%;
+	height: 100px;
+	width: 100px;
+}
+
+.page-header {
+	background-color: #e8eaff;
+	box-shadow: 0px 1px 0px #25648F;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+}
+
+.page-title {
+	color: #25648F;
+	padding-left: 10px;
+	padding-top: 10px;
+}

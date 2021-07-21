@@ -66,9 +66,12 @@ main {
   overflow: auto; 
   
   /* this is used to center the modal */
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding-top: 50%;
+  padding-top: 35vh;
 }
 
 .modal {
@@ -78,7 +81,7 @@ main {
   background: #fff;
   padding: 15px;
   width: 50%;
-  max-width: 400px;
+  max-width: 500px;
   min-width: 250px;
   text-align: left;
 }

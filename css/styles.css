@@ -119,9 +119,3 @@ main {
 }
 
 /*--------------------END MODAL--------------------------------*/
-
-
-@media all and (max-width: 300px) {
-  .modal {
-	width: 200px;
-  }

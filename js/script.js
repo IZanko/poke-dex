@@ -10,19 +10,29 @@ let pokemonRepository = (function () {
 		return pokemonList;
 	}
 	function addListItem(pokemon) {
-		let pokemonList = document.querySelector('.pokemon-list');
-		let listPokemon = document.createElement('li');
-		let button = document.createElement('button');					//create button for each pokemon
-		let pokemonName = pokemon.name;
-		button.innerText = pokemonName.toUpperCase(pokemonName);
-		button.classList.add('button-class');		//add class 'button-class
-		listPokemon.appendChild(button); 								
-		pokemonList.appendChild(listPokemon);
-		
-		button.addEventListener('click', () => {
-		  showDetails(pokemon);
-		});
+		pokemonRepository.loadDetails(pokemon).then(function () {
+		      let $row = $(".row");
 
+		      let $card = $('<div class="card" style="width:250px; text-align:center;"></div>');
+		      let $image = $('<img class="mx-auto" alt="Card image" style="width:50%" />');
+		      $image.attr("src", pokemon.imageUrlFront);
+		      let $cardBody = $('<div class="card-body"></div>');
+		      let $cardTitle = $("<h4 class='card-title' >" + pokemon.name + "</h4>");
+		      let $seeProfile = $(
+		        '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">See Profile</button>'
+		      );
+
+		      $row.append($card);
+		      //Append the image to each card
+		      $card.append($image);
+		      $card.append($cardBody);
+		      $cardBody.append($cardTitle);
+		      $cardBody.append($seeProfile);
+
+		      $seeProfile.on("click", function (event) {
+		        showDetails(pokemon);
+		      });
+		    });
 	}
 
 	function loadList() {
@@ -46,76 +56,65 @@ let pokemonRepository = (function () {
 	      return response.json();
 	    }).then(function (details) {
 	      // Now we add the details to the item
-	      item.imageUrl = details.sprites.front_default;
+	      item.imageUrlFront = details.sprites.front_default;
+	      item.imageUrlBack = details.sprites.back_default;
 	      item.height = details.height;
-	      item.types = details.types;
+	      item.weight = details.weight;
+	      item.types = [];
+        details.types.forEach(function (i) {
+        	item.types.push(' '+i.type.name);
+        });
+        item.ability = [];
+				details.abilities.forEach(function (i) {
+        	item.ability.push(' '+i.ability.name);
+        });
 	    }).catch(function (e) {
 	      console.error(e);
 	    });
 	  }
 	function showDetails(pokemon) {
 		pokemonRepository.loadDetails(pokemon).then(function () {
-			showModal(pokemon.name, ('Height: '+pokemon.height), pokemon.imageUrl);
+			showModal(pokemon);
 		});
 	}
 
 	/*---------------MODAL--------------------------------------*/
 
-	  let modalContainer = document.querySelector('#modal-container');
-	  function showModal(title, text, src) {
-	    modalContainer.innerHTML = '';
-	    let modal = document.createElement('div');
-	    modal.classList.add('modal');
+	  let modalContainer = document.querySelector('#exampleModal');
+	  function showModal(item) {
+	  			let modalBody = $(".modal-body");
+	  	    let modalTitle = $(".modal-title");
+	  	    let modalHeader = $(".modal-header");
+	  	    // let $modalContainer = $("#modal-container");
+	  	    //clear existing content of the model
+	  	    // modalHeader.empty();
+	  	    modalTitle.empty();
+	  	    modalBody.empty();
 
-	    let closeButtonElement = document.createElement('button');
-	    closeButtonElement.classList.add('modal-close');
-	    closeButtonElement.innerText = 'Close';
-	    closeButtonElement.addEventListener('click', hideModal);
+	  	    //creating element for name in modal content
+	  	    let nameElement = $("<h1>" + item.name + "</h1>");
+	  	    // // creating img in modal content
+	  	    let imageElementFront = $('<img class="modal-img" style="width:50%">');
+	  	    imageElementFront.attr("src", item.imageUrlFront);
+	  	    let imageElementBack = $('<img class="modal-img" style="width:50%">');
+	  	    imageElementBack.attr("src", item.imageUrlBack);
+	  	    // //creating element for height in modal content
+	  	    let heightElement = $("<p>" + "Height : " + item.height + "</p>");
+	  	        // //creating element for weight in modal content
+    			let weightElement = $("<p>" + "Weight : " + item.weight + "</p>");
+    			    // //creating element for type in modal content
+    			let typesElement = $("<p>" + "Types : " + item.types + "</p>");
+   						// //creating element for type in modal content
+    			let abilityElement = $("<p>" + "Abilities : " + item.ability + "</p>");
 
-	    let titleElement = document.createElement('h1');
-	    let pokemonName = title;
-	    titleElement.innerText = pokemonName.toUpperCase(pokemonName);
-
-	    let contentElement = document.createElement('p');
-	    contentElement.innerText = text;
-
-	    let imageContainer = document.createElement('div')
-	    imageContainer.classList.add('image-container');
-	    let pokemonImage = document.createElement('img');
-	    pokemonImage.src = src;
-
-	    modal.appendChild(closeButtonElement);
-	    modal.appendChild(titleElement);
-	    modal.appendChild(contentElement);
-	    imageContainer.appendChild(pokemonImage);
-	    modal.appendChild(imageContainer);
-	    modalContainer.appendChild(modal);
-
-
-	    modalContainer.classList.add('is-visible');
-	  }
-
-	  function hideModal() {
-	    modalContainer.classList.remove('is-visible');
-	  }
-
-	  window.addEventListener('keydown', (e) => {
-	    if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-	      hideModal();  
-	    }
-	  });
-	  modalContainer.addEventListener('click', (e) => {
-	    // Since this is also triggered when clicking INSIDE the modal
-	    // We only want to close if the user clicks directly on the overlay
-	    let target = e.target;
-	    if (target === modalContainer) {
-	      hideModal();
-	    }
-	  });
-
-
-
-
+	  	    modalTitle.append(nameElement);
+	  	    modalBody.append(imageElementFront);
+	  	    modalBody.append(imageElementBack);
+	  	    modalBody.append(heightElement);
+	  	    modalBody.append(weightElement);
+	  	    modalBody.append(typesElement);
+	  	    modalBody.append(abilityElement);
+		}
 	/*-------------END MODAL-----------------------------------------*/
 
 

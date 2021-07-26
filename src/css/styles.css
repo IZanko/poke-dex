@@ -4,18 +4,17 @@
 	width: 100px;
 	padding: 10px;
 }
-
-.navbar-brand {
-  font-size: 50px;
-  color: #e5e7ff;
+.logo:hover {
+  border-radius: 50%;
+  box-shadow: 4px 4px #e5e7ff;
+  cursor: pointer;
 }
+.navbar-brand {
+  font-size: 60px;
+}
+
 
 /*----------------MODAL------------------------------------------------*/
-
-.my-class:hover {
-  background-color: #4caf50;
-  color: white;
-}
 
 .card {
   position: relative;

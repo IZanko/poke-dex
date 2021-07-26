@@ -3,38 +3,41 @@ let pokemonRepository = (function () {
 	let pokemonList = [];
 	let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
+	//add new pokemon instance to array
 	function add(pokemon) {
 		pokemonList.push(pokemon);
 	}
+	//show all pokemon currently in array
 	function getAll() {
 		return pokemonList;
 	}
+	//create a modal card for each pokemon instance
 	function addListItem(pokemon) {
 		pokemonRepository.loadDetails(pokemon).then(function () {
-		      let $row = $(".row");
+		      let row = $(".row");
 
-		      let $card = $('<div class="card" style="width:250px; text-align:center;"></div>');
-		      let $image = $('<img class="mx-auto" alt="Card image" style="width:50%" />');
-		      $image.attr("src", pokemon.imageUrlFront);
-		      let $cardBody = $('<div class="card-body"></div>');
-		      let $cardTitle = $("<h4 class='card-title' >" + pokemon.name + "</h4>");
-		      let $seeProfile = $(
+		      let card = $('<div class="card" style="width:250px; text-align:center;"></div>');
+		      let image = $('<img class="mx-auto" alt="Card image" style="width:50%" />');
+		      image.attr("src", pokemon.imageUrlFront);
+		      let cardBody = $('<div class="card-body"></div>');
+		      let cardTitle = $("<h4 class='card-title' >" + pokemon.name + "</h4>");
+		      let seeProfile = $(
 		        '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">See Profile</button>'
 		      );
 
-		      $row.append($card);
-		      //Append the image to each card
-		      $card.append($image);
-		      $card.append($cardBody);
-		      $cardBody.append($cardTitle);
-		      $cardBody.append($seeProfile);
-
-		      $seeProfile.on("click", function (event) {
+		      //Append items to each card
+		      row.append(card);
+		      card.append(image);
+		      card.append(cardBody);
+		      cardBody.append(cardTitle);
+		      cardBody.append(seeProfile);
+					//add event listener to open modal
+		      seeProfile.on("click", function (event) {
 		        showDetails(pokemon);
 		      });
 		    });
 	}
-
+	//access the API and return pokemon name and url for more info
 	function loadList() {
 	  return fetch(apiUrl).then(function (response) {
 	    return response.json();
@@ -50,6 +53,7 @@ let pokemonRepository = (function () {
 	    console.error(e);
 	  })
 	}
+	//access pokemon url from api and return requested data
 	function loadDetails(item) {
 	    let url = item.detailsUrl;
 	    return fetch(url).then(function (response) {
@@ -85,9 +89,8 @@ let pokemonRepository = (function () {
 	  			let modalBody = $(".modal-body");
 	  	    let modalTitle = $(".modal-title");
 	  	    let modalHeader = $(".modal-header");
-	  	    // let $modalContainer = $("#modal-container");
-	  	    //clear existing content of the model
-	  	    // modalHeader.empty();
+
+	  	    //clear existing content of the modal
 	  	    modalTitle.empty();
 	  	    modalBody.empty();
 
@@ -107,6 +110,7 @@ let pokemonRepository = (function () {
    						// //creating element for type in modal content
     			let abilityElement = $("<p>" + "Abilities : " + item.ability + "</p>");
 
+    			//append each item per instance
 	  	    modalTitle.append(nameElement);
 	  	    modalBody.append(imageElementFront);
 	  	    modalBody.append(imageElementBack);

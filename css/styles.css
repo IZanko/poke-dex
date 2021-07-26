@@ -7,7 +7,6 @@
 .logo:hover {
   border-radius: 50%;
   box-shadow: 4px 4px #e5e7ff;
-  cursor: pointer;
 }
 .navbar-brand {
   font-size: 60px;

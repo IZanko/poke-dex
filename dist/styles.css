@@ -1,0 +1,31 @@
+.logo {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  padding: 10px;
+}
+.logo:hover {
+  border-radius: 50%;
+  box-shadow: 4px 4px #e5e7ff;
+}
+.navbar-brand {
+  font-size: 60px;
+}
+.card {
+  position: relative;
+  text-align: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  background-color: #e5e7ff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+.row {
+  display: flex;
+  justify-content: center;
+}

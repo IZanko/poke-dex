@@ -1,8 +1,8 @@
 .logo {
-	border-radius: 50%;
-	height: 100px;
-	width: 100px;
-	padding: 10px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  padding: 10px;
 }
 .logo:hover {
   border-radius: 50%;
@@ -11,7 +11,6 @@
 .navbar-brand {
   font-size: 60px;
 }
-
 
 /*----------------MODAL------------------------------------------------*/
 
@@ -33,4 +32,14 @@
 .row {
   display: flex;
   justify-content: center;
+}
+/*----------------END   MODAL------------------------------------------------*/
+
+@media all and (max-width: 425px) {
+  .navbar-brand {
+    font-size: 40px;
+  }
+  .heading {
+    vertical-align: baseline;
+  }
 }
